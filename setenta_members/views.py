@@ -10,11 +10,12 @@ from setenta_members.models import Authorizations
 from django.core.mail import send_mail
 from setenta_members import secret_keys
 import os, base64
+import urllib
 
 login_url = "https://xn--mi-wia.com/setenta/login?token="
 
 def generate_secure_key():
-    return base64.b64encode(os.urandom(80))
+    return base64.b64encode(os.urandom(40))
 
 # Create your views here.
 
@@ -63,7 +64,7 @@ def send_key_to(request, email):
 
 	global login_url
 
-	link = login_url + key_auth
+	link = login_url + urllib.quote_plus(key_auth)
 	title = "Setentan jäsenrekisteri - kirjautumislinkki"
 	body= "Hei,\n\nOlet yrittänyt kirjautua Setentan jäsenrekisteriin. Voit jatkaa kirjautumista seuraamalla henkilökohtaista linkkiäsi:\n\n"
 	body = body + link + "\n\nT. Setenta Ry\n\nPS. Älä vastaa suoraan tähän viestiin"
@@ -105,7 +106,7 @@ def remove_authorization(email):
 		auth = Authorizations.objects.get(email=email)
 		auth.delete()
 	except:
-		raise
+		pass
 
 def check_captcha(request):
 	email = request.session.get('email', "")
@@ -135,22 +136,23 @@ def create_empty_user(email):
 
 def login_failed(request):
 	template = loader.get_template('login_failed.html')
-	context = RequestContext(request, {})
+	context = RequestContext(request, {'email': '',})
 	return HttpResponse(template.render(context))
 
 def login(request):
 	key = request.GET.get("token", "")
 	try:
-		auth = Authorizations.objects.get(key=key)
+		auth = Authorizations.objects.get(key=urllib.unquote_plus(key))
 		if auth.expirity > timezone.now():
 			#There is a token and it's not expired -> login
-			create_empty_user(email)
+			create_empty_user(auth.email)
 			request.session['logged_user'] = auth.email
 			auth.delete()
 			return redirect('edit_profile')
 		else:
 			return redirect('login_failed')
 	except:
+		raise
 		return redirect('login_failed')
 
 
@@ -205,6 +207,7 @@ def update_profile(request):
 		return redirect('edit_profile')
 
 	subject_string = ";".join(subjects)
+
 	member = Members.objects.get(email=user)
 	member.name = name
 	member.city = city
@@ -218,7 +221,7 @@ def update_complete(request):
 	if user == "":
 		return redirect('index')
 
-	semester = current_semseter() + "-" + (current_semseter()+1)
+	semester = str(current_semseter()) + "-" + str(current_semseter()+1)
 	template = loader.get_template('update_complete.html')
 	context = RequestContext(request, {
 		'email': user,

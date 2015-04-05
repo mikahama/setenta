@@ -1,0 +1,40 @@
+body{
+	background-color: #AA151B;
+	margin: 0px;
+}
+#fork{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	cursor: pointer;
+}
+#mainview{
+	margin-top: 40px;
+	width: 100%;
+	min-height: 300px;
+	background-color: #F1BF00;
+	padding: 32px;
+	font-family: sans-serif;
+}
+#setenta_title{
+	font-family: 'strike';
+	font-size: 70px;
+	color: #F1BF00;
+	margin-top:20px;
+	margin-bottom: 0px;
+}
+@font-face {
+    font-family: 'strike'; /*a name to be used later*/
+    src: url('strike.ttf'); /*URL to font*/
+}
+#bottomtext{
+	text-align: center;
+}
+
+#bottomtext a:link, #bottomtext a:visited{
+	color: #97979A;
+}
+.error{
+	font-style: italic;
+	color: #AA151B;
+}

@@ -3,15 +3,17 @@
 	<head>
 		<title>Setenta Ry:n jäsenrekisteri</title>
 		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="static/setenta.css">
 		<script type="text/javascript" src="static/member.js"></script>
 	</head>
 	<body onload="loadOldValues()">
+		<p id="setenta_title">Setenta</p>
 		<div id="mainview">
 			<h1>Oma profiili</h1>
 			<form method="POST" action="update_profile">
 				<p>Muokkaa profiiliasi: <b>{{ email }}</b></p>
 				<p>Koko nimi:</p>
-				<input name="name" id="name">
+				<input name="name" id="m_name">
 				<p>Asuinkunta:</p>
 				<input name="city" id="city">
 				<p>Setentan piirissä oleva pääaine:</p>
@@ -23,7 +25,7 @@
 					<input type="checkbox" class="checkb" name="subjs" value="kat" id="kat"> Katalonialainen filologia<br>
 					<input type="checkbox" class="checkb" name="subjs" value="gal" id="gal"> Galicialainen filologia<br>
 					<input type="checkbox" class="checkb" name="subjs" value="bask" id="bask"> Baskin kieli
-				<p>{{ error }}</p>
+				<p class="error">{{ error }}</p>
 				{% csrf_token %}
 				<input type="submit" value="Tallenna">
 			</form>
@@ -31,7 +33,7 @@
 		<div id="old_data" style="display:none">
 			<p id="old_name">{{ name }}</p>
 			<p id="old_city">{{ city }}</p>
-			<p id="old_subjects">{{ subjects }}}</p>
+			<p id="old_subjects">{{ subjects }}</p>
 		</div>
 
 		<div id="bottomtext">

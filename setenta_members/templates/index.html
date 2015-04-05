@@ -2,15 +2,18 @@
 <html>
 	<head>
 		<title>Setenta Ry:n jäsenrekisteri</title>
+		<link rel="stylesheet" type="text/css" href="static/setenta.css">
 		<meta charset="UTF-8">
 	</head>
 	<body>
+		<img src="static/fork.png" id="fork" onclick="window.location = 'https://github.com/mikahama/setenta'">
+		<p id="setenta_title">Setenta</p>
 		<div id="mainview">
 			<h1>Liity Setentaan tai päivitä tietosi</h1>
 			<form method="POST" action="validate">
 				<p>Anna sähköposti:</p>
 				<input type="email" id="email" name="email">
-				<p>{{ error }}</p>
+				<p class="error">{{ error }}</p>
 				{% csrf_token %}
 				<input type="submit" value="Jatka">
 			</form>

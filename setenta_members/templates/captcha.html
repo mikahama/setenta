@@ -3,15 +3,17 @@
 	<head>
 		<title>Setenta Ry:n jäsenrekisteri</title>
 		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="static/setenta.css">
 		<script src='https://www.google.com/recaptcha/api.js'></script>
 	</head>
 	<body>
+		<p id="setenta_title">Setenta</p>
 		<div id="mainview">
 			<h1>Lisävahvistus</h1>
 			<form method="POST" action="check_captcha">
 				<p>Sähköpostiisi <i>{{ email }}</i> on jo lähetetty kirjautumisviesti. Voit kuitenkin tilata uuden viestin syöttämällä captchan:</p>
 				<div class="g-recaptcha" data-sitekey="{{ public_key }}"></div>
-				<p>{{ error }}</p>
+				<p class="error">{{ error }}</p>
 				{% csrf_token %}
 				<input type="submit" value="Jatka">
 			</form>
