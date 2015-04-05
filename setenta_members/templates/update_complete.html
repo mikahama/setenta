@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Setenta Ry:n jäsenrekisteri</title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<div id="mainview">
+			<h1>Jäsentietosi on päivitetty!</h1>
+			<p>Jäsenyytesi on voimassa lukuvuonna: <b>{{ semester }}</b></p>
+			<p>Voit muokata jäsentietojasi sähköpostillasi: <b>{{ email }}</b></p>
+			<button onclick="window.location = 'edit_profile'">Palaa muokkaukseen</button><button onclick="window.location = 'logout'">Kirjaudu ulos</button>
+		</div>
+		<div id="bottomtext">
+			<p>(C) 2015 Mika Hämäläinen. Selaa lähdekoodia <a href="https://github.com/mikahama/setenta" target="_blank">GitHubissa</a>.</p>
+		</div>
+	</body>
+</html>

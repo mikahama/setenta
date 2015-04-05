@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Setenta Ry:n jäsenrekisteri</title>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="static/member.js"></script>
+	</head>
+	<body onload="loadOldValues()">
+		<div id="mainview">
+			<h1>Oma profiili</h1>
+			<form method="POST" action="update_profile">
+				<p>Muokkaa profiiliasi: <b>{{ email }}</b></p>
+				<p>Koko nimi:</p>
+				<input name="name" id="name">
+				<p>Asuinkunta:</p>
+				<input name="city" id="city">
+				<p>Setentan piirissä oleva pääaine:</p>
+					<input type="checkbox" class="checkb" name="subjs" value="esp_p" id="esp_p"> Espanjalainen filologia<br>
+					<input type="checkbox" class="checkb" name="subjs" value="port_p" id="port_p"> Portugalilainen filologia
+				<p>Sivuaine:</p>
+					<input type="checkbox" class="checkb" name="subjs" value="esp_s" id="esp_s"> Espanjalainen filologia<br>
+					<input type="checkbox" class="checkb" name="subjs" value="port_s" id="port_s"> Portugalilainen filologia<br>
+					<input type="checkbox" class="checkb" name="subjs" value="kat" id="kat"> Katalonialainen filologia<br>
+					<input type="checkbox" class="checkb" name="subjs" value="gal" id="gal"> Galicialainen filologia<br>
+					<input type="checkbox" class="checkb" name="subjs" value="bask" id="bask"> Baskin kieli
+				<p>{{ error }}</p>
+				{% csrf_token %}
+				<input type="submit" value="Tallenna">
+			</form>
+		</div>
+		<div id="old_data" style="display:none">
+			<p id="old_name">{{ name }}</p>
+			<p id="old_city">{{ city }}</p>
+			<p id="old_subjects">{{ subjects }}}</p>
+		</div>
+
+		<div id="bottomtext">
+			<p>(C) 2015 Mika Hämäläinen. Selaa lähdekoodia <a href="https://github.com/mikahama/setenta" target="_blank">GitHubissa</a>.</p>
+		</div>
+	</body>
+</html>

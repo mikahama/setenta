@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Setenta Ry:n jäsenrekisteri</title>
+		<meta charset="UTF-8">
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	</head>
+	<body>
+		<div id="mainview">
+			<h1>Lisävahvistus</h1>
+			<form method="POST" action="check_captcha">
+				<p>Sähköpostiisi <i>{{ email }}</i> on jo lähetetty kirjautumisviesti. Voit kuitenkin tilata uuden viestin syöttämällä captchan:</p>
+				<div class="g-recaptcha" data-sitekey="{{ public_key }}"></div>
+				<p>{{ error }}</p>
+				{% csrf_token %}
+				<input type="submit" value="Jatka">
+			</form>
+		</div>
+		<div id="bottomtext">
+			<p>(C) 2015 Mika Hämäläinen. Selaa lähdekoodia <a href="https://github.com/mikahama/setenta" target="_blank">GitHubissa</a>.</p>
+		</div>
+	</body>
+</html>
