@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Setenta Ry:n jäsenrekisteri</title>
+		<link rel="stylesheet" type="text/css" href="static/setenta.css">
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="static/member_list.js"></script>
+	</head>
+	<body onload="showFlags()">
+		<p id="setenta_title">Setenta</p>
+		<div id="mainview">
+			<h1>Aktiiviset setentalaiset</h1>
+			<p><a href="{{ show_link }}">{{ show_text }}</a> | <a href="logout">Kirjaudu ulos</a></p>
+			{% if members %}
+			<table border="1" id="jasenet">
+				<tr>
+					<th>Nimi</th> <th>Sähköposti</th> <th>Asuinkunta</th> <th>Aineet</th>
+				</tr>
+				{% for member in members %}
+					<tr>
+						<td>{{ member.name }}</td> <td>{{ member.email }}</td> <td>{{ member.city }}</td> <td class="table_subjects">{{ member.subjects }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+			{% else %}
+				<p>Setentalla ei ole aktiivisia jäseniä ;-(</p>
+			{% endif %}
+			<p>Taulukon selite:</p>
+			<p><img class="table_flag" src="static/flags/esp_p.png">Espanja pääaineena<img class="table_flag" src="static/flags/port_p.png">Portugali pääaineena<img class="table_flag" src="static/flags/esp_s.png">Espanja sivuaineena<img class="table_flag" src="static/flags/port_s.png">Portugali sivuaineena<img class="table_flag" src="static/flags/kat.png">Katalaani sivuaineena<img class="table_flag" src="static/flags/gal.png">Galego sivuaineena<img class="table_flag" src="static/flags/bask.png">Baski sivuaineena</p>
+		</div>
+		<div id="bottomtext">
+			<p>(C) 2015 Mika Hämäläinen. Selaa lähdekoodia <a href="https://github.com/mikahama/setenta" target="_blank">GitHubissa</a>.</p>
+		</div>
+	</body>
+</html>

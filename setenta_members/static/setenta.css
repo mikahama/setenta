@@ -38,3 +38,13 @@ body{
 	font-style: italic;
 	color: #AA151B;
 }
+table{
+	background-color: white;
+}
+.table_flag{
+	margin-left: 2px;
+	margin-right: 2px;
+}
+th, td{
+	padding: 5px;
+}

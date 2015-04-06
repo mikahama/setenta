@@ -268,6 +268,27 @@ def admin_check(request):
 
 def member_list(request):
 	#TODO: member listinig page
-	pass
+	admin_user = request.session.get('admin_username', None)
+	if admin_user is None:
+		#Admin not logged in!
+		return redirect('admin_login')
+
+	filter_val = active_semseter()-1
+	show_link = "member_list?all"
+	show_text = "Näytä myös entiset jäsenet"
+	if 'all' in request.GET:
+		filter_val = 1
+		show_link = "member_list"
+		show_text = "Näytä vain nykyiset jäsenet"
+
+	members = Members.objects.exclude(semester=filter_val)
+	template = loader.get_template('member_list.html')
+	context = RequestContext(request, {
+		'members': members,
+		'show_link': show_link,
+		'show_text': show_text,
+	})
+	return HttpResponse(template.render(context))
+
 
 
