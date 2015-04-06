@@ -18,4 +18,7 @@ urlpatterns = patterns('',
     url("edit_profile", views.edit_profile, name="edit_profile"),
     url("update_profile", views.update_profile, name="update_profile"),
     url("update_complete", views.update_complete, name="update_complete"),
+    url("admin", views.admin_login, name="admin_login"),
+    url("logad", views.admin_check, name="admin_check"),
+    url("member_list", views.member_list, name="member_list"),
 )

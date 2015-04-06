@@ -6,9 +6,11 @@ from django.shortcuts import redirect
 from datetime import datetime, timedelta
 from django.utils import timezone
 from setenta_members.models import Members
+from setenta_members.models import Admins
 from setenta_members.models import Authorizations
 from django.core.mail import send_mail
 from setenta_members import secret_keys
+from django.contrib.auth import hashers
 import os, base64
 import urllib
 import requests
@@ -228,3 +230,44 @@ def update_complete(request):
 		'semester': semester,
 	})
 	return HttpResponse(template.render(context))
+
+def admin_login(request):
+	error =""
+	if request.session.get('admin_fail', False):
+		error = "Virheellinen captcha, käyttäjätunnus tai salasana"
+		request.session['admin_fail'] = False
+	template = loader.get_template('admin_login.html')
+	context = RequestContext(request, {
+		'error': error,
+		"public_key": secret_keys.recaptcha_public(),
+	})
+	return HttpResponse(template.render(context))
+
+def admin_check(request):
+	user = request.POST.get("username")
+	password = request.POST.get("password")
+
+	resp = request.POST.get("g-recaptcha-response","")
+	payload = {'secret': secret_keys.recaptcha_secret(), 'response': resp}
+	r = requests.post("https://www.google.com/recaptcha/api/siteverify", params=payload)
+	r_json = r.json()
+	if r_json["success"] == False:
+		#Incorrect captcha
+		request.session['admin_fail'] = True
+		return redirect('admin_login')
+	try:
+		loguser = Admins.objects.get(username=user)
+		if hashers.check_password(password, loguser.password) ==True:
+			#Log in!
+			request.session['admin_username'] = user
+			return redirect('member_list')
+	except:
+		pass
+	request.session['admin_fail'] = True
+	return redirect('admin_login')
+
+def member_list(request):
+	#TODO: member listinig page
+	pass
+
+

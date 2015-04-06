@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Setenta Ry:n jäsenrekisteri</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="static/setenta.css">
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	</head>
+	<body>
+		<p id="setenta_title">Setenta</p>
+		<div id="mainview">
+			<h1>Ylläpitonäkymä</h1>
+			<form method="POST" action="logad">
+				<p><b>Huom:</b> Tämä näkymä on tarkoitettu vain Setentan hallitukselle!</p>
+				<p>Käyttäjätunnus: <input name="username"></p>
+				<p>Salasana: <input name="password" type="password"></p>
+				<div class="g-recaptcha" data-sitekey="{{ public_key }}"></div>
+				<p class="error">{{ error }}</p>
+				{% csrf_token %}
+				<input type="submit" value="Kirjaudu">
+			</form>
+		</div>
+		<div id="bottomtext">
+			<p>(C) 2015 Mika Hämäläinen. Selaa lähdekoodia <a href="https://github.com/mikahama/setenta" target="_blank">GitHubissa</a>.</p>
+		</div>
+	</body>
+</html>
