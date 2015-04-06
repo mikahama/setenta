@@ -287,6 +287,7 @@ def member_list(request):
 		'members': members,
 		'show_link': show_link,
 		'show_text': show_text,
+		'member_count': len(members),
 	})
 	return HttpResponse(template.render(context))
 

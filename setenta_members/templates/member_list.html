@@ -9,16 +9,17 @@
 	<body onload="showFlags()">
 		<p id="setenta_title">Setenta</p>
 		<div id="mainview">
-			<h1>Aktiiviset setentalaiset</h1>
+			<h1>Setentalaiset</h1>
 			<p><a href="{{ show_link }}">{{ show_text }}</a> | <a href="logout">Kirjaudu ulos</a></p>
 			{% if members %}
+			<p>Jäseniä: {{ member_count }}</p>
 			<table border="1" id="jasenet">
 				<tr>
-					<th>Nimi</th> <th>Sähköposti</th> <th>Asuinkunta</th> <th>Aineet</th>
+					<th>Nimi</th> <th>Sähköposti</th> <th>Asuinkunta</th> <th>Aineet</th> <th>Lukukausi</th>
 				</tr>
 				{% for member in members %}
 					<tr>
-						<td>{{ member.name }}</td> <td>{{ member.email }}</td> <td>{{ member.city }}</td> <td class="table_subjects">{{ member.subjects }}</td>
+						<td>{{ member.name }}</td> <td>{{ member.email }}</td> <td>{{ member.city }}</td> <td class="table_subjects">{{ member.subjects }}</td> <td class="table_semester">{{ member.semester }}-{{ member.semester|add:"+1" }}</td> 
 					</tr>
 				{% endfor %}
 			</table>
