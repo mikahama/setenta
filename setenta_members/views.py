@@ -11,8 +11,10 @@ from django.core.mail import send_mail
 from setenta_members import secret_keys
 import os, base64
 import urllib
+import requests
+import json
 
-login_url = "https://xn--mi-wia.com/setenta/login?token="
+login_url = "https://xn--mi-wia.com/setenta/login"
 
 def generate_secure_key():
     return base64.b64encode(os.urandom(40))
@@ -53,18 +55,16 @@ def send_key_to(request, email):
 			return redirect('captcha')
 		else:
 			#Let's update the expired token
-			auth.expirity = expirity
-			auth.key = key_auth
-			auth.save()
-
+			remove_authorization(email)
 	except:
 		#There is no token registered for the email
-		auth = Authorizations(email=email, key=key_auth, expirity=expirity)
-		auth.save()
+		pass
+	auth = Authorizations(email=email, key=key_auth, expirity=expirity)
+	auth.save()
 
 	global login_url
 
-	link = login_url + urllib.quote_plus(key_auth)
+	link = login_url + "?token=" + urllib.quote_plus(key_auth) + "&email=" + urllib.quote_plus(email)
 	title = "Setentan jäsenrekisteri - kirjautumislinkki"
 	body= "Hei,\n\nOlet yrittänyt kirjautua Setentan jäsenrekisteriin. Voit jatkaa kirjautumista seuraamalla henkilökohtaista linkkiäsi:\n\n"
 	body = body + link + "\n\nT. Setenta Ry\n\nPS. Älä vastaa suoraan tähän viestiin"
@@ -90,9 +90,9 @@ def captcha_view(request):
 	if email == "":
 		return redirect('index')
 	error = ""
-	if request.session.get('capthcha_fail', False):
+	if request.session.get('captcha_fail', False):
 		error = "Hups! Virheellinen captcha"
-		request.session['capthcha_fail'] = False
+		request.session['captcha_fail'] = False
 	template = loader.get_template('captcha.html')
 	context = RequestContext(request, {
 		'error': error,
@@ -112,17 +112,16 @@ def check_captcha(request):
 	email = request.session.get('email', "")
 	if email == "":
 		return redirect('index')
-	response = request.POST.get("g-recaptcha-response","")
-	payload = {'secret': secret_keys.recaptcha_secret(), 'response': response}
+	resp = request.POST.get("g-recaptcha-response","")
+	payload = {'secret': secret_keys.recaptcha_secret(), 'response': resp}
 	r = requests.post("https://www.google.com/recaptcha/api/siteverify", params=payload)
 	r_json = r.json()
-	data = json.load(r_json)
-	if data["success"] == True:
+	if r_json["success"] == True:
 		#Captcha correct
 		remove_authorization(email)
 		return send_key_to(request, email)
 	else:
-		request.session['capthcha_fail'] = True
+		request.session['captcha_fail'] = True
 		return redirect('captcha')
 
 def create_empty_user(email):
@@ -141,8 +140,9 @@ def login_failed(request):
 
 def login(request):
 	key = request.GET.get("token", "")
+	email = request.GET.get("email", "")
 	try:
-		auth = Authorizations.objects.get(key=urllib.unquote_plus(key))
+		auth = Authorizations.objects.get(key=urllib.unquote_plus(key),email=urllib.unquote_plus(email))
 		if auth.expirity > timezone.now():
 			#There is a token and it's not expired -> login
 			create_empty_user(auth.email)
