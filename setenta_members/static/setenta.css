@@ -1,6 +1,7 @@
 body{
 	background-color: #AA151B;
 	margin: 0px;
+	min-width: 880px;
 }
 #fork{
 	position: absolute;
@@ -38,6 +39,10 @@ body{
 	font-style: italic;
 	color: #AA151B;
 }
+.success{
+	font-style: italic;
+	color: green;
+}
 table{
 	background-color: white;
 }
@@ -50,4 +55,44 @@ th, td{
 }
 .table_semester{
 	text-align: right;
+}
+#index_desc{
+	font-style: italic;
+}
+#login_label, #login_email{
+	font-weight: bold;
+	font-size: larger;
+}
+#tool_bar{
+	font-weight: bold;
+}
+#tool_bar a:visited, #tool_bar a:link{
+	color: #AA151B;
+}
+
+.hyperlink_span{
+	cursor: pointer;
+	color: #AA151B;
+	text-decoration: underline;
+}
+
+#big_black{
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	background-color: black;
+	opacity: 0.7;
+}
+#password_dialog{
+	position: fixed;
+	top: 100px;
+	left: 100px;
+	right: 100px;
+	background-color: #F1BF00;
+	text-align: center;
+	font-family: sans-serif;
+	min-height: 300px;
+
 }

@@ -267,7 +267,6 @@ def admin_check(request):
 	return redirect('admin_login')
 
 def member_list(request):
-	#TODO: member listinig page
 	admin_user = request.session.get('admin_username', None)
 	if admin_user is None:
 		#Admin not logged in!
@@ -291,5 +290,39 @@ def member_list(request):
 	})
 	return HttpResponse(template.render(context))
 
+def change_password(request):
+	old_password = request.POST.get("old_password", "")
+	new_password = request.POST.get("new_password", "")
+	admin_user = request.session.get('admin_username', None)
+	response_data = {}
+
+	if admin_user is None:
+		#The user is not logged in
+		response_data['errorMsg'] = 'Istuntosi on vanhentunut'
+		response_data['successMsg'] = ''
+		return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+	if len(new_password)*len(old_password) == 0:
+		#Password(s) of 0 length 
+		response_data['errorMsg'] = 'Anna kelvollinen salasana'
+		response_data['successMsg'] = ''
+		return HttpResponse(json.dumps(response_data), content_type="application/json")
+	try:
+		loguser = Admins.objects.get(username=admin_user)
+		if hashers.check_password(old_password, loguser.password) ==True:
+			#Correct password!
+			loguser.password = hashers.make_password(new_password)
+			loguser.save()
+			response_data['errorMsg'] = ''
+			response_data['successMsg'] = 'Salasana vaihdettu'
+			return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+	except:
+		pass
+
+	#Incorrect password
+	response_data['errorMsg'] = 'Virheellinen salasana'
+	response_data['successMsg'] = ''
+	return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 

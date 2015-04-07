@@ -5,12 +5,15 @@
 		<link rel="stylesheet" type="text/css" href="static/setenta.css">
 		<meta charset="UTF-8">
 		<script type="text/javascript" src="static/member_list.js"></script>
+		<script type="text/javascript">
+			var csrf_token = "{{ csrf_token }}";
+		</script>
 	</head>
 	<body onload="showFlags()">
 		<p id="setenta_title">Setenta</p>
 		<div id="mainview">
 			<h1>Setentalaiset</h1>
-			<p><a href="{{ show_link }}">{{ show_text }}</a> | <a href="logout">Kirjaudu ulos</a></p>
+			<p id="tool_bar"><a href="{{ show_link }}">{{ show_text }}</a> | <span class="hyperlink_span" onclick="javascript:showDialog()">Vaihda salasana</span> | <a href="logout">Kirjaudu ulos</a></p>
 			{% if members %}
 			<p>Jäseniä: {{ member_count }}</p>
 			<table border="1" id="jasenet">
@@ -31,6 +34,17 @@
 		</div>
 		<div id="bottomtext">
 			<p>(C) 2015 Mika Hämäläinen. Selaa lähdekoodia <a href="https://github.com/mikahama/setenta" target="_blank">GitHubissa</a>.</p>
+		</div>
+		<div id="big_black" style="display:none;" onclick="hideDialog()">
+		</div>
+		<div id="password_dialog"style="display:none;">
+			<h2>Vaihda salasana:</h2>
+			<p>Vanha salasana: <input type="password" id="old_password"></p>
+			<p>Uusi salasana: <input type="password" id="new_password"></p>
+			<p class="error" id="pswrd_error"></p>
+			<p class="success" id="pswrd_success"></p>
+			<button id="pswrd_button" onclick="changePassword()">Vaihda salasana</button>
+			<p class="hyperlink_span" onclick="hideDialog()">Sulje ikkuna</p>
 		</div>
 	</body>
 </html>

@@ -10,9 +10,10 @@
 		<p id="setenta_title">Setenta</p>
 		<div id="mainview">
 			<h1>Liity Setentaan tai päivitä tietosi</h1>
+			<p id="index_desc">Setentaan voivat liittyä kaikki Helsingin yliopiston opiskelijat, jotka opiskelevat pää- tai sivuaineenaan espanjaa, portugalia, katalaania, galegoa tai baskia.</p>
 			<form method="POST" action="validate">
-				<p>Anna sähköposti:</p>
-				<input type="email" id="email" name="email">
+				<p id="login_label">Kirjaudu tai liity sähköpostillasi:</p>
+				<input type="email" id="login_email" name="email">
 				<p class="error">{{ error }}</p>
 				{% csrf_token %}
 				<input type="submit" value="Jatka">

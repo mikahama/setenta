@@ -21,4 +21,5 @@ urlpatterns = patterns('',
     url("admin", views.admin_login, name="admin_login"),
     url("logad", views.admin_check, name="admin_check"),
     url("member_list", views.member_list, name="member_list"),
+    url("password", views.change_password, name="password"),
 )
