@@ -154,7 +154,6 @@ def login(request):
 		else:
 			return redirect('login_failed')
 	except:
-		raise
 		return redirect('login_failed')
 
 
