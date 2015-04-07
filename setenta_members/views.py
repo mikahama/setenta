@@ -272,7 +272,7 @@ def member_list(request):
 		#Admin not logged in!
 		return redirect('admin_login')
 
-	filter_val = active_semseter()-1
+	filter_val = active_semseter()
 	show_link = "member_list?all"
 	show_text = "Näytä myös entiset jäsenet"
 	if 'all' in request.GET:
@@ -280,7 +280,7 @@ def member_list(request):
 		show_link = "member_list"
 		show_text = "Näytä vain nykyiset jäsenet"
 
-	members = Members.objects.exclude(semester=filter_val)
+	members = Members.objects.filter(semester__gte=filter_val)
 	template = loader.get_template('member_list.html')
 	context = RequestContext(request, {
 		'members': members,
