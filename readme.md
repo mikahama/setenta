@@ -11,7 +11,7 @@ Frist of all, rename the file `settings_template` to `settings.py` in `setenta/s
 
 Go to `setenta/setenta_members/` and rename `secret_keys_template` to `secret_keys.py`. You'll need to edit this file to enable reCaptcha.
 
-After you have done all the previous steps, go to `setenta/` directory and run `python manage.py migrate`. You'll have to have Django and Python installed to run the command.
+After you have done all the previous steps, go to `setenta/` directory and run `python manage.py migrate`. You'll have to have Django (tested with version 1.7.6) and Python installed to run the command.
 
 Now you should have the project ready to run. Use `python manage.py runserver` to test the application.
 
