@@ -144,7 +144,7 @@ def login(request):
 	key = request.GET.get("token", "")
 	email = request.GET.get("email", "")
 	try:
-		auth = Authorizations.objects.get(key=urllib.unquote_plus(key),email=urllib.unquote_plus(email))
+		auth = Authorizations.objects.get(key=key,email=urllib.unquote_plus(email))
 		if auth.expirity > timezone.now():
 			#There is a token and it's not expired -> login
 			create_empty_user(auth.email)
