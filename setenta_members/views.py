@@ -23,6 +23,9 @@ def generate_secure_key():
 
 # Create your views here.
 
+def root_redir(request):
+	return redirect('index')
+
 def index(request):
 	error = ""
 	if request.session.get('auth_fail', False):

@@ -3,11 +3,8 @@ from django.conf.urls import patterns, include, url
 from setenta_members import views
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'setenta.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
-    url(r'^$', views.index, name="index"),
+    url(r'^$', views.root_redir, name="root_page"),
+    url("index", views.index, name="index"),
     url("validate", views.send_email_key, name="validate"),
     url("mail_sent", views.mail_sent, name="mail_sent"),
     url("show_captcha", views.captcha_view, name="captcha"),
