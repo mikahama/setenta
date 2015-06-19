@@ -159,6 +159,20 @@ def login(request):
 	except:
 		return redirect('login_failed')
 
+def admin_add_user(request):
+	admin_user = request.session.get('admin_username', None)
+	if admin_user is None:
+		#Admin not logged in!
+		return redirect('admin_login')
+
+	user_email = request.POST.get("email", None)
+	if user_email is None or "@" not in user_email:
+		#empty email
+		return redirect('admin_login')
+
+	create_empty_user(user_email)
+	request.session['logged_user'] = user_email
+	return redirect('edit_profile')
 
 def edit_profile(request):
 	user = request.session.get('logged_user', "")

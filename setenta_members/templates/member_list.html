@@ -13,7 +13,7 @@
 		<p id="setenta_title">Setenta</p>
 		<div id="mainview">
 			<h1>Setentalaiset</h1>
-			<p id="tool_bar"><a href="{{ show_link }}">{{ show_text }}</a> | <span class="hyperlink_span" onclick="javascript:showDialog()">Vaihda salasana</span> | <a href="logout">Kirjaudu ulos</a></p>
+			<p id="tool_bar"><a href="{{ show_link }}">{{ show_text }}</a> | <span class="hyperlink_span" onclick="javascript:adminAddUser()">Lisää/Muokkaa sähköpostilla</span> | <span class="hyperlink_span" onclick="javascript:showDialog()">Vaihda salasana</span> | <a href="logout">Kirjaudu ulos</a></p>
 			{% if members %}
 			<p>Jäseniä: {{ member_count }}</p>
 			<table border="1" id="jasenet">
@@ -32,6 +32,10 @@
 			<p>Taulukon selite:</p>
 			<p><img class="table_flag" src="static/flags/esp_p.png">Espanja pääaineena<img class="table_flag" src="static/flags/port_p.png">Portugali pääaineena<img class="table_flag" src="static/flags/esp_s.png">Espanja sivuaineena<img class="table_flag" src="static/flags/port_s.png">Portugali sivuaineena<img class="table_flag" src="static/flags/kat.png">Katalaani sivuaineena<img class="table_flag" src="static/flags/gal.png">Galego sivuaineena<img class="table_flag" src="static/flags/bask.png">Baski sivuaineena</p>
 		</div>
+		<form id="edit_user_form" action="admin_add_user" style="display: none;" method="POST">
+			<input id="edit_user_form_email" name="email">
+			{% csrf_token %}
+		</form>
 		<div id="bottomtext">
 			<p>(C) 2015 Mika Hämäläinen. Selaa lähdekoodia <a href="https://github.com/mikahama/setenta" target="_blank">GitHubissa</a>.</p>
 		</div>

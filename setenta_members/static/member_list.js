@@ -57,3 +57,14 @@ function parsePswrdResponse(serverResponse){
 	pswrd_error.innerText = response.errorMsg;
 	pswrd_success.innerText = response.successMsg;
 }
+
+function adminAddUser(){
+	var person = prompt("Anna jäsenen sähköposti", "");
+
+	if (person != null && person != "" && person.indexOf("@") > -1) {
+		edit_user_form_email.value = person;
+		edit_user_form.submit();
+	}else if(person != null){
+		alert("Anna kelvollinen sähköposti");
+	}
+}
