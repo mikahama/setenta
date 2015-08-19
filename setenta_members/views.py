@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from setenta_members import secret_keys
 from django.contrib.auth import hashers
 import os, base64
+import uuid
 import urllib
 import requests
 import json
@@ -19,7 +20,7 @@ import json
 login_url = "https://xn--mi-wia.com/setenta/login"
 
 def generate_secure_key():
-    return base64.b64encode(os.urandom(40))
+    return str(uuid.uuid4())
 
 # Create your views here.
 
