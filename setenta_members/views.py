@@ -70,10 +70,10 @@ def send_key_to(request, email):
 
 	global login_url
 
-	link = login_url + "?token=" + urllib.quote_plus(key_auth) + "&email=" + urllib.quote_plus(email)
+	link = login_url + "?token=" + urllib.quote_plus(key_auth) + "&email=" + urllib.quote_plus(email.replace("@","-at-"))
 	title = "Setentan jäsenrekisteri - kirjautumislinkki"
-	body= "Hei,\n\nOlet yrittänyt kirjautua Setentan jäsenrekisteriin. Voit jatkaa kirjautumista seuraamalla henkilökohtaista linkkiäsi:\n\n"
-	body = body + link + "\n\nT. Setenta Ry\n\nPS. Älä vastaa suoraan tähän viestiin"
+	body= u"Hei,\n\nOlet yrittänyt kirjautua Setentan jäsenrekisteriin. Voit jatkaa kirjautumista seuraamalla henkilökohtaista linkkiäsi:\n\n"
+	body = body + link + u"\n\nT. Setenta Ry\n\nPS. Älä vastaa suoraan tähän viestiin"
 
 	send_mail(title, body, 'noreply@xn--mi-wia.com', [email], fail_silently=False)
 	request.session['email'] = email
@@ -148,7 +148,7 @@ def login(request):
 	key = request.GET.get("token", "")
 	email = request.GET.get("email", "")
 	try:
-		auth = Authorizations.objects.get(key=key,email=urllib.unquote_plus(email))
+		auth = Authorizations.objects.get(key=key,email=email.replace("-at-", "@"))
 		if auth.expirity > timezone.now():
 			#There is a token and it's not expired -> login
 			create_empty_user(auth.email)
